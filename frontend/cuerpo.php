@@ -11,7 +11,7 @@
     <!-- <img onerror="this.src='./fotos/nofoto.webp';" src="./fotos/andres1.jpg"> -->
 
     <div id="listado" class="d-flex flex-wrap justify-content-center">
-        <div id="contenedor" class="container-fluid">
+        <div id="contenedor" class="container">
         </div>
     </div>
 

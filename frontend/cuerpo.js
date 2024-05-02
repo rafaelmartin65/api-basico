@@ -2,7 +2,7 @@ let ultimo = 0;
 fetch("http://localhost/api%20basico/backend/")
   .then((response) => response.json())
   .then((datos) => {
-    console.log(datos);
+    console.log("estos son los datos", datos);
     datos.forEach((elemento) => {
       if (parseInt(elemento.id) > ultimo) ultimo = parseInt(elemento.id);
       cargaContacto(elemento);
@@ -14,6 +14,24 @@ function cargaContacto(perfil) {
   let fila = document.createElement("div");
   fila.classList.add("row", "align-items-center");
 
+  // Creamos la columna de la foto
+  let colFoto = document.createElement("div");
+  colFoto.classList.add("col");
+
+  let foto = document.createElement("img");
+  foto.src = "./fotos/" + perfil.nombre + ".jpg";
+  foto.onerror = () => {
+    foto.src = "./fotos/nofoto.webp";
+  };
+  foto.style.width = "80px";
+  foto.classList.add("rounded-circle", "m-2");
+
+  console.log(foto.src);
+  colFoto.appendChild(foto);
+  fila.appendChild(colFoto);
+
+ 
+  // Creamos columna del nombre
   let colNombre = document.createElement("div");
   colNombre.classList.add("col");
   let nombre = document.createElement("p");
@@ -69,7 +87,7 @@ function fmodificar(event) {
       document.getElementById("id").disabled;
       fetch(
         "http://localhost/api%20basico/backend/?id=" +
-          event.target.id
+        event.target.id
       )
         .then((response) => response.json())
         .then((fichaContacto) => {
@@ -77,6 +95,8 @@ function fmodificar(event) {
           document.getElementById("nombre").value = fichaContacto.nombre;
           document.getElementById("telefono").value = fichaContacto.telefono;
           document.getElementById("email").value = fichaContacto.email;
+          document.getElementById("foto").src =
+            "./fotos/" + fichaContacto.nombre + ".jpg";
         });
       let script = document.createElement("script");
       script.src = "formulario.js";
@@ -108,6 +128,6 @@ function feliminar(event) {
     .then((response) => response.text())
     .then((mensaje) => {
       console.log(mensaje);
-      location.href ="./index.php";
+      location.href = "./index.php";
     });
 }
